@@ -4,9 +4,9 @@ import lombok.Getter;
 
 public class APIException extends RuntimeException {
     @Getter
-    private int errorCode;
+    private final int errorCode;
     @Getter
-    private String errorMessage;
+    private final String errorMessage;
 
     public APIException(int errorCode, String errorMessage) {
         super(errorMessage);

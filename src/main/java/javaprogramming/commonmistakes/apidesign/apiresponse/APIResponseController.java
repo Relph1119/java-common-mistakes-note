@@ -97,7 +97,7 @@ public class APIResponseController {
                     if ("Created".equals(orderInfo.getStatus()))
                         return String.format("创建订单成功，订单号是：%s，状态是：%s", orderInfo.getOrderId(), orderInfo.getStatus());
                     else
-                        return String.format("创建订单失败，请联系客服处理");
+                        return "创建订单失败，请联系客服处理";
                 }
             } catch (JsonProcessingException e) {
                 e.printStackTrace();

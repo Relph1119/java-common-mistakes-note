@@ -14,7 +14,6 @@ public class CommonMistakesApplication {
         String msg = null;
         for (int i = 0; i < 200000; i++) {
             try {
-                msg.toString();
             } catch (Exception e) {
                 e.printStackTrace();
                 if (e.getStackTrace().length == 0) {

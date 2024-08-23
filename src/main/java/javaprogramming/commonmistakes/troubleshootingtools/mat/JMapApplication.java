@@ -24,7 +24,7 @@ public class JMapApplication implements CommandLineRunner {
         while (true) {
             String payload = IntStream.rangeClosed(1, 1000000)
                     .mapToObj(__ -> "a")
-                    .collect(Collectors.joining("")) + UUID.randomUUID().toString();
+                    .collect(Collectors.joining("")) + UUID.randomUUID();
             log.debug(payload);
             TimeUnit.MILLISECONDS.sleep(1);
         }

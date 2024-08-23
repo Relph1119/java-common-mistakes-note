@@ -14,10 +14,10 @@ import java.util.PropertyPermission;
 
 @Slf4j
 public class ScriptingSandbox {
-    private static ThreadLocal<Boolean> needCheck = ThreadLocal.withInitial(() -> false);
-    private ScriptEngine scriptEngine;
+    private static final ThreadLocal<Boolean> needCheck = ThreadLocal.withInitial(() -> false);
+    private final ScriptEngine scriptEngine;
     private AccessControlContext accessControlContext;
-    private SecurityManager securityManager;
+    private final SecurityManager securityManager;
 
     public ScriptingSandbox(ScriptEngine scriptEngine) throws InstantiationException {
         this.scriptEngine = scriptEngine;

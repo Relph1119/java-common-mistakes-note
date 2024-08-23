@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.concurrent.ThreadPoolExecutor;
 
 public class ThreadPoolHealthIndicator implements HealthIndicator {
-    private ThreadPoolExecutor threadPool;
+    private final ThreadPoolExecutor threadPool;
 
     public ThreadPoolHealthIndicator(ThreadPoolExecutor threadPool) {
         this.threadPool = threadPool;

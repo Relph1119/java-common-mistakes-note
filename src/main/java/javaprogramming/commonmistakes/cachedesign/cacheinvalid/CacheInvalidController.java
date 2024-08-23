@@ -23,7 +23,7 @@ public class CacheInvalidController {
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
-    private AtomicInteger atomicInteger = new AtomicInteger();
+    private final AtomicInteger atomicInteger = new AtomicInteger();
 
     //@PostConstruct
     public void wrongInit() {

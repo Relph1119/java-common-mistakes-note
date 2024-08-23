@@ -8,10 +8,10 @@ import java.util.stream.IntStream;
 
 public class HighCPUApplication {
 
-    private static byte[] payload = IntStream.rangeClosed(1, 10_000)
+    private static final byte[] payload = IntStream.rangeClosed(1, 10_000)
             .mapToObj(__ -> "a")
             .collect(Collectors.joining("")).getBytes();
-    private static Random random = new Random();
+    private static final Random random = new Random();
 
     public static void main(String[] args) {
         task();

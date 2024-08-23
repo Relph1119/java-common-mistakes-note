@@ -21,7 +21,7 @@ public class GenericAndInheritanceApplication {
                         e.printStackTrace();
                     }
                 });
-        System.out.println(child1.toString());
+        System.out.println(child1);
     }
 
     public static void wrong2() {
@@ -35,7 +35,7 @@ public class GenericAndInheritanceApplication {
                         e.printStackTrace();
                     }
                 });
-        System.out.println(child1.toString());
+        System.out.println(child1);
     }
 
     public static void wrong3() {
@@ -49,7 +49,7 @@ public class GenericAndInheritanceApplication {
                         e.printStackTrace();
                     }
                 });
-        System.out.println(child2.toString());
+        System.out.println(child2);
     }
 
     public static void right() {
@@ -57,13 +57,13 @@ public class GenericAndInheritanceApplication {
         Arrays.stream(child2.getClass().getDeclaredMethods())
                 .filter(method -> method.getName().equals("setValue") && !method.isBridge())
                 .findFirst().ifPresent(method -> {
-            try {
-                method.invoke(child2, "test");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-        System.out.println(child2.toString());
+                    try {
+                        method.invoke(child2, "test");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+        System.out.println(child2);
     }
 }
 

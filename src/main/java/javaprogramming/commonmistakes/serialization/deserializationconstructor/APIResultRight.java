@@ -16,7 +16,6 @@ public class APIResultRight {
     @JsonCreator
     public APIResultRight(@JsonProperty("code") int code) {
         this.code = code;
-        if (code == 2000) success = true;
-        else success = false;
+        success = code == 2000;
     }
 }

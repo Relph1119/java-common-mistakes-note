@@ -21,7 +21,7 @@ public class RibbonRetryIssueClientController {
     @GetMapping("wrong")
     public String wrong() {
         log.info("client is called");
-        try{
+        try {
             smsClient.sendSmsWrong("13600000000", UUID.randomUUID().toString());
         } catch (Exception ex) {
             log.error("send sms failed : {}", ex.getMessage());
@@ -31,7 +31,7 @@ public class RibbonRetryIssueClientController {
 
     @GetMapping("right")
     public String right() {
-        try{
+        try {
             smsClient.sendSmsRight("13600000000", UUID.randomUUID().toString());
         } catch (Exception ex) {
             log.error("send sms failed : {}", ex.getMessage());

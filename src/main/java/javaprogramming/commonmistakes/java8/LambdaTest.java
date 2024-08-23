@@ -1,13 +1,13 @@
 package javaprogramming.commonmistakes.java8;
 
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.*;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class LambdaTest {
 
@@ -41,7 +41,7 @@ public class LambdaTest {
         //Function的例子
         Function<String, String> upperCase = String::toUpperCase;
         Function<String, String> duplicate = s -> s.concat(s);
-        assertThat(upperCase.andThen(duplicate).apply("test"), is("TESTTEST"));
+        assertEquals(upperCase.andThen(duplicate).apply("test"), "TESTTEST");
 
         //Supplier的例子
         Supplier<Integer> random = () -> ThreadLocalRandom.current().nextInt();
@@ -50,6 +50,6 @@ public class LambdaTest {
         //BinaryOperator
         BinaryOperator<Integer> add = Integer::sum;
         BinaryOperator<Integer> subtraction = (a, b) -> a - b;
-        assertThat(subtraction.apply(add.apply(1, 2), 3), is(0));
+        assertSame(subtraction.apply(add.apply(1, 2), 3), 0);
     }
 }

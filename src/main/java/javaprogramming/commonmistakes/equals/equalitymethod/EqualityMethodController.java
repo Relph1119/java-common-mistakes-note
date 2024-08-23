@@ -74,8 +74,8 @@ public class EqualityMethodController {
 
     class Point {
         private final String desc;
-        private int x;
-        private int y;
+        private final int x;
+        private final int y;
 
         public Point(int x, int y, String desc) {
             this.x = x;
@@ -86,8 +86,8 @@ public class EqualityMethodController {
 
     class PointWrong {
         private final String desc;
-        private int x;
-        private int y;
+        private final int x;
+        private final int y;
 
         public PointWrong(int x, int y, String desc) {
             this.x = x;

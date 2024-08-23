@@ -17,8 +17,8 @@ import java.util.Map;
 @Slf4j
 @RestController
 public class CodeInjectController {
-    private ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
-    private ScriptEngine jsEngine = scriptEngineManager.getEngineByName("js");
+    private final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
+    private final ScriptEngine jsEngine = scriptEngineManager.getEngineByName("js");
 
     //haha';java.lang.System.exit(0);'
     @GetMapping("wrong")

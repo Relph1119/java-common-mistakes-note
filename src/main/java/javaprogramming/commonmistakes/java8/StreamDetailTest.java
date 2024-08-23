@@ -2,6 +2,7 @@ package javaprogramming.commonmistakes.java8;
 
 
 import javaprogramming.commonmistakes.java8.collector.MostPopularCollector;
+import org.hamcrest.MatcherAssert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,10 +18,10 @@ import static java.util.Comparator.comparing;
 import static java.util.Comparator.comparingDouble;
 import static java.util.stream.Collectors.*;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 public class StreamDetailTest {
-    private static Random random = new Random();
+    private static final Random random = new Random();
     private List<Order> orders;
 
     @Before
@@ -36,8 +37,8 @@ public class StreamDetailTest {
         System.out.println("//最近半年的金额大于40的订单");
         orders.stream()
                 .filter(Objects::nonNull)
-                .filter(order -> order.getPlacedAt().isAfter(LocalDateTime.now().minusMonths(6)))
-                .filter(order -> order.getTotalPrice() > 40)
+                .filter(order -> order.getPlacedAt().isAfter(LocalDateTime.now().minusMonths(6))) // 最近半年
+                .filter(order -> order.getTotalPrice() > 40) // 总价格大于40的订单
                 .forEach(System.out::println);
     }
 
@@ -46,13 +47,13 @@ public class StreamDetailTest {
         //计算所有订单商品数量
         //通过两次遍历实现
         LongAdder longAdder = new LongAdder();
-        orders.stream().forEach(order ->
+        orders.forEach(order ->
                 order.getOrderItemList().forEach(orderItem -> longAdder.add(orderItem.getProductQuantity())));
 
         //使用两次mapToLong+sum方法实现
-        assertThat(longAdder.longValue(), is(orders.stream().mapToLong(order ->
+        assertSame(longAdder.longValue(), orders.stream().mapToLong(order ->
                 order.getOrderItemList().stream()
-                        .mapToLong(OrderItem::getProductQuantity).sum()).sum()));
+                        .mapToLong(OrderItem::getProductQuantity).sum()).sum());
 
         //把IntStream通过转换Stream<Project>
         System.out.println(IntStream.rangeClosed(1, 10)
@@ -72,7 +73,7 @@ public class StreamDetailTest {
     @Test
     public void flatMap() {
         //不依赖订单上的总价格字段
-        System.out.println(orders.stream().mapToDouble(order -> order.getTotalPrice()).sum());
+        System.out.println(orders.stream().mapToDouble(Order::getTotalPrice).sum());
 
         //如果不依赖订单上的总价格,可以直接展开订单商品进行价格统计
         System.out.println(orders.stream()
@@ -118,7 +119,7 @@ public class StreamDetailTest {
                 .flatMap(order -> order.getOrderItemList().stream())
                 .collect(groupingBy(OrderItem::getProductName, summingInt(OrderItem::getProductQuantity)))
                 .entrySet().stream()
-                .collect(maxBy(Map.Entry.comparingByValue()))
+                .max(Map.Entry.comparingByValue())
                 .map(Map.Entry::getKey)
                 .ifPresent(System.out::println);
 
@@ -130,13 +131,13 @@ public class StreamDetailTest {
         System.out.println("//根据下单年月分组统计订单ID列表");
         System.out.println(orders.stream().collect
                 (groupingBy(order -> order.getPlacedAt().format(DateTimeFormatter.ofPattern("yyyyMM")),
-                        mapping(order -> order.getId(), toList()))));
+                        mapping(Order::getId, toList()))));
 
         System.out.println("//根据下单年月+用户名两次分组，统计订单ID列表");
         System.out.println(orders.stream().collect
                 (groupingBy(order -> order.getPlacedAt().format(DateTimeFormatter.ofPattern("yyyyMM")),
-                        groupingBy(order -> order.getCustomerName(),
-                                mapping(order -> order.getId(), toList())))));
+                        groupingBy(Order::getCustomerName,
+                                mapping(Order::getId, toList())))));
     }
 
     @Test
@@ -157,10 +158,10 @@ public class StreamDetailTest {
     @Test
     public void distinct() {
         System.out.println("//不去重的下单用户");
-        System.out.println(orders.stream().map(order -> order.getCustomerName()).collect(joining(",")));
+        System.out.println(orders.stream().map(Order::getCustomerName).collect(joining(",")));
 
         System.out.println("//去重的下单用户");
-        System.out.println(orders.stream().map(order -> order.getCustomerName()).distinct().collect(joining(",")));
+        System.out.println(orders.stream().map(Order::getCustomerName).distinct().collect(joining(",")));
 
         System.out.println("//所有购买过的商品");
         System.out.println(orders.stream()
@@ -176,12 +177,11 @@ public class StreamDetailTest {
                 .filter(i -> (i < 57 || i > 65) && (i < 90 || i > 97))
                 .mapToObj(i -> (char) i)
                 .limit(20)
-                .collect(StringBuilder::new, StringBuilder::append, StringBuilder::append)
-                .toString());
+                .collect(StringBuilder::new, StringBuilder::append, StringBuilder::append).toString());
 
         System.out.println("//所有下单的用户,使用toSet去重了");
         System.out.println(orders.stream()
-                .map(order -> order.getCustomerName()).collect(toSet())
+                .map(Order::getCustomerName).collect(toSet())
                 .stream().collect(joining(",", "[", "]")));
 
         System.out.println("//用toCollection收集器指定集合类型");
@@ -199,14 +199,13 @@ public class StreamDetailTest {
 
         System.out.println("//订单平均购买的商品数量");
         System.out.println(orders.stream().collect(averagingInt(order ->
-                order.getOrderItemList().stream()
-                        .collect(summingInt(OrderItem::getProductQuantity)))));
+                order.getOrderItemList().stream().mapToInt(OrderItem::getProductQuantity).sum())));
     }
 
     @Test
     public void partition() {
         //先来看一下所有下单的用户
-        orders.stream().map(order -> order.getCustomerName()).collect(toSet()).forEach(System.out::println);
+        orders.stream().map(Order::getCustomerName).collect(toSet()).forEach(System.out::println);
         //根据是否有下单记录进行分区
         System.out.println(Customer.getData().stream().collect(
                 partitioningBy(customer -> orders.stream().mapToLong(Order::getCustomerId)
@@ -220,6 +219,7 @@ public class StreamDetailTest {
                 .map(order -> order.getCustomerName() + "@" + order.getPlacedAt())
                 .limit(2).forEach(System.out::println);
 
+        // 按照下单时间，查询第3个和第4个订单的顾客姓名和下单时间
         orders.stream()
                 .sorted(comparing(Order::getPlacedAt))
                 .map(order -> order.getCustomerName() + "@" + order.getPlacedAt())

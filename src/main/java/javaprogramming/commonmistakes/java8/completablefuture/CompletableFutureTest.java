@@ -8,7 +8,7 @@ import java.util.concurrent.*;
 @Slf4j
 public class CompletableFutureTest {
 
-    private static Long orderId = 123L;
+    private static final Long orderId = 123L;
     ExecutorService threadPool = Executors.newFixedThreadPool(10);
 
     @Test
@@ -22,16 +22,16 @@ public class CompletableFutureTest {
                         CompletableFuture.runAsync(() -> order.setMerchant(Services.getMerchant(order.getMerchantId())))
                 ).join()).whenCompleteAsync((order, __) ->
                         CompletableFuture.allOf(
-                                CompletableFuture.supplyAsync(() -> Services.calcOrderPrice(order.getItemPrice(), order.getUser().getVip())).thenAccept(order::setOrderPrice),
-                                CompletableFuture.supplyAsync(() -> Services.getWalkDistance("from", "to"))
-                                        .exceptionally(ex -> {
-                                            ex.printStackTrace();
-                                            return Services.getDirectDistance("from", "to");
-                                        })
-                                        .thenAcceptBoth(CompletableFuture.anyOf(
-                                                CompletableFuture.supplyAsync(Services::getWeatherA),
-                                                CompletableFuture.supplyAsync(Services::getWeatherB)),
-                                                (distance, weather) -> order.setDeliverPrice(Services.calcDeliverPrice(order.getMerchant().getAverageWaitMinutes(), distance, (String) weather))))
+                                        CompletableFuture.supplyAsync(() -> Services.calcOrderPrice(order.getItemPrice(), order.getUser().getVip())).thenAccept(order::setOrderPrice),
+                                        CompletableFuture.supplyAsync(() -> Services.getWalkDistance("from", "to"))
+                                                .exceptionally(ex -> {
+                                                    ex.printStackTrace();
+                                                    return Services.getDirectDistance("from", "to");
+                                                })
+                                                .thenAcceptBoth(CompletableFuture.anyOf(
+                                                                CompletableFuture.supplyAsync(Services::getWeatherA),
+                                                                CompletableFuture.supplyAsync(Services::getWeatherB)),
+                                                        (distance, weather) -> order.setDeliverPrice(Services.calcDeliverPrice(order.getMerchant().getAverageWaitMinutes(), distance, (String) weather))))
                                 .whenComplete((aVoid, ex) -> order.setTotalPrice(order.getOrderPrice().add(order.getDeliverPrice()).subtract(order.getCouponPrice())))
                                 .join()).get();
 

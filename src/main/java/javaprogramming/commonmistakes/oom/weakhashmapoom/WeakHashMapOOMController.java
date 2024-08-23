@@ -20,9 +20,9 @@ import java.util.stream.LongStream;
 @RequestMapping("weakhashmapoom")
 @Slf4j
 public class WeakHashMapOOMController {
-    private Map<User, UserProfile> cache = new WeakHashMap<>();
-    private Map<User, WeakReference<UserProfile>> cache2 = new WeakHashMap<>();
-    private Map<User, UserProfile> cache3 = new ConcurrentReferenceHashMap<>();
+    private final Map<User, UserProfile> cache = new WeakHashMap<>();
+    private final Map<User, WeakReference<UserProfile>> cache2 = new WeakHashMap<>();
+    private final Map<User, UserProfile> cache3 = new ConcurrentReferenceHashMap<>();
 
     @GetMapping("wrong")
     public void wrong() {

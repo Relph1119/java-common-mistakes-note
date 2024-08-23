@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 
 public final class FilesUtil {
-    private static LinkedHashSet<Path> files = new LinkedHashSet<>();
+    private static final LinkedHashSet<Path> files = new LinkedHashSet<>();
 
     static {
         Runtime.getRuntime().addShutdownHook(new Thread(FilesUtil::shutdownHook));

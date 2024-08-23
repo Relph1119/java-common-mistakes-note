@@ -31,7 +31,7 @@ import static java.util.stream.Collectors.toMap;
 public class MetricsAspect {
     private static final Map<Class<?>, Object> DEFAULT_VALUES = Stream
             .of(boolean.class, byte.class, char.class, double.class, float.class, int.class, long.class, short.class)
-            .collect(toMap(clazz -> (Class<?>) clazz, clazz -> Array.get(Array.newInstance(clazz, 1), 0)));
+            .collect(toMap(clazz -> clazz, clazz -> Array.get(Array.newInstance(clazz, 1), 0)));
     @Autowired
     private ObjectMapper objectMapper;
 

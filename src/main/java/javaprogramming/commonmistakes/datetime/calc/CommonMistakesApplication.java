@@ -24,7 +24,7 @@ public class CommonMistakesApplication {
     private static void wrong1() {
         System.out.println("wrong1");
         Date today = new Date();
-        Date nextMonth = new Date(today.getTime() + 30 * 1000 * 60 * 60 * 24);
+        Date nextMonth = new Date(today.getTime() + 30L * 1000 * 60 * 60 * 24);
         System.out.println(today);
         System.out.println(nextMonth);
     }
@@ -56,8 +56,7 @@ public class CommonMistakesApplication {
     private static void test() {
         System.out.println("//测试操作日期");
         System.out.println(LocalDate.now()
-                .minus(Period.ofDays(1))
-                .plus(1, ChronoUnit.DAYS)
+                .minus(Period.ofDays(1)).plusDays(1)
                 .minusMonths(1)
                 .plus(Period.ofMonths(1)));
 

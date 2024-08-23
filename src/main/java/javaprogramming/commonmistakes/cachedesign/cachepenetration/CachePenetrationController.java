@@ -24,7 +24,7 @@ public class CachePenetrationController {
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
-    private AtomicInteger atomicInteger = new AtomicInteger();
+    private final AtomicInteger atomicInteger = new AtomicInteger();
     private BloomFilter<Integer> bloomFilter;
 
     @PostConstruct

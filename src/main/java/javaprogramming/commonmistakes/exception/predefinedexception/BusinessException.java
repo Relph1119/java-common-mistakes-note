@@ -2,7 +2,7 @@ package javaprogramming.commonmistakes.exception.predefinedexception;
 
 public class BusinessException extends RuntimeException {
 
-    private int code;
+    private final int code;
 
     public BusinessException(String message, int code) {
         super(message);

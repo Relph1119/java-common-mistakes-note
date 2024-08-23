@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicLong;
 @Endpoint(id = "adder")
 @Component
 public class TestEndpoint {
-    private static AtomicLong atomicLong = new AtomicLong();
+    private static final AtomicLong atomicLong = new AtomicLong();
 
     @ReadOperation
     public String get() {

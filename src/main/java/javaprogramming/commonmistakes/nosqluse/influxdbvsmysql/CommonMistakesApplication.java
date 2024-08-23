@@ -68,7 +68,7 @@ public class CommonMistakesApplication {
             @Override
             public void setValues(PreparedStatement preparedStatement, int i) throws SQLException {
                 preparedStatement.setLong(1, ThreadLocalRandom.current().nextInt(10000));
-                preparedStatement.setTimestamp(2, Timestamp.valueOf(LocalDateTime.now().minusSeconds(5 * i)));
+                preparedStatement.setTimestamp(2, Timestamp.valueOf(LocalDateTime.now().minusSeconds(5L * i)));
             }
 
             @Override
@@ -95,9 +95,9 @@ public class CommonMistakesApplication {
             //批量插入，10000条数据刷一次，或1秒刷一次
             influxDB.enableBatch(BatchOptions.DEFAULTS.actions(10000).flushDuration(1000));
             IntStream.rangeClosed(1, ROWS).mapToObj(i -> Point
-                    .measurement("m")
-                    .addField("value", ThreadLocalRandom.current().nextInt(10000))
-                    .time(LocalDateTime.now().minusSeconds(5 * i).toInstant(ZoneOffset.UTC).toEpochMilli(), TimeUnit.MILLISECONDS).build())
+                            .measurement("m")
+                            .addField("value", ThreadLocalRandom.current().nextInt(10000))
+                            .time(LocalDateTime.now().minusSeconds(5L * i).toInstant(ZoneOffset.UTC).toEpochMilli(), TimeUnit.MILLISECONDS).build())
                     .forEach(influxDB::write);
             influxDB.flush();
             log.info("init influxdb finished with count {} took {}ms", influxDB.query(new Query("SELECT COUNT(*) FROM m")).getResults().get(0).getSeries().get(0).getValues().get(0).get(1), System.currentTimeMillis() - begin);

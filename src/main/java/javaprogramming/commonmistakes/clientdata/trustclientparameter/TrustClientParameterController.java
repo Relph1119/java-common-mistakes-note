@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @Validated
 public class TrustClientParameterController {
 
-    private HashMap<Integer, Country> allCountries = new HashMap<>();
+    private final HashMap<Integer, Country> allCountries = new HashMap<>();
 
     public TrustClientParameterController() {
         allCountries.put(1, new Country(1, "China"));

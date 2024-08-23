@@ -7,7 +7,7 @@ import java.util.stream.IntStream;
 
 public class SubListApplication {
 
-    private static List<List<Integer>> data = new ArrayList<>();
+    private static final List<List<Integer>> data = new ArrayList<>();
 
     private static void wrong() {
         List<Integer> list = IntStream.rangeClosed(1, 10).boxed().collect(Collectors.toList());

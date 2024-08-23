@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 @Component
 @Slf4j
 public class CompensationJob {
-    private static ThreadPoolExecutor compensationThreadPool = new ThreadPoolExecutor(
+    private static final ThreadPoolExecutor compensationThreadPool = new ThreadPoolExecutor(
             10, 10,
             1, TimeUnit.HOURS,
             new ArrayBlockingQueue<>(1000),

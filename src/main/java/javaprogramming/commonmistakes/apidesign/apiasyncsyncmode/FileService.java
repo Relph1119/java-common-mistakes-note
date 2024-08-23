@@ -9,9 +9,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Service
 public class FileService {
 
-    private ExecutorService threadPool = Executors.newFixedThreadPool(2);
-    private AtomicInteger atomicInteger = new AtomicInteger(0);
-    private ConcurrentHashMap<String, SyncQueryUploadTaskResponse> downloadUrl = new ConcurrentHashMap<>();
+    private final ExecutorService threadPool = Executors.newFixedThreadPool(2);
+    private final AtomicInteger atomicInteger = new AtomicInteger(0);
+    private final ConcurrentHashMap<String, SyncQueryUploadTaskResponse> downloadUrl = new ConcurrentHashMap<>();
 
     private String uploadFile(byte[] data) {
         try {
@@ -19,7 +19,7 @@ public class FileService {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return "http://www.demo.com/download/" + UUID.randomUUID().toString();
+        return "http://www.demo.com/download/" + UUID.randomUUID();
     }
 
     private String uploadThumbnailFile(byte[] data) {
@@ -28,7 +28,7 @@ public class FileService {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return "http://www.demo.com/download/" + UUID.randomUUID().toString();
+        return "http://www.demo.com/download/" + UUID.randomUUID();
     }
 
     public UploadResponse upload(UploadRequest request) {

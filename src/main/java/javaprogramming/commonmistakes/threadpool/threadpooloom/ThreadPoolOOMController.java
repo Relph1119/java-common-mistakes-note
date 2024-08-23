@@ -38,7 +38,7 @@ public class ThreadPoolOOMController {
             threadPool.execute(() -> {
                 String payload = IntStream.rangeClosed(1, 1000000)
                         .mapToObj(__ -> "a")
-                        .collect(Collectors.joining("")) + UUID.randomUUID().toString();
+                        .collect(Collectors.joining("")) + UUID.randomUUID();
                 try {
                     TimeUnit.HOURS.sleep(1);
                 } catch (InterruptedException e) {

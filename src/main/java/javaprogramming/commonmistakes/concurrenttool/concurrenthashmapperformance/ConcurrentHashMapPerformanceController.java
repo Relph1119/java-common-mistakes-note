@@ -21,9 +21,9 @@ import java.util.stream.IntStream;
 @Slf4j
 public class ConcurrentHashMapPerformanceController {
 
-    private static int LOOP_COUNT = 10000000;
-    private static int THREAD_COUNT = 10;
-    private static int ITEM_COUNT = 10;
+    private static final int LOOP_COUNT = 10000000;
+    private static final int THREAD_COUNT = 10;
+    private static final int ITEM_COUNT = 10;
 
     @GetMapping("good")
     public String good() throws InterruptedException {

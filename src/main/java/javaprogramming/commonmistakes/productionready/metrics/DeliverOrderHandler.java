@@ -22,7 +22,7 @@ public class DeliverOrderHandler {
 
     //配送服务运行状态
     private volatile boolean deliverStatus = true;
-    private AtomicLong deliverCounter = new AtomicLong();
+    private final AtomicLong deliverCounter = new AtomicLong();
 
     //通过一个外部接口来改变配送状态模拟配送服务停工
     @PostMapping("status")

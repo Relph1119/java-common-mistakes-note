@@ -47,7 +47,6 @@ public class FileBadEncodingIssueApplication {
     }
 
 
-
     private static void right1() throws IOException {
 
         char[] chars = new char[10];

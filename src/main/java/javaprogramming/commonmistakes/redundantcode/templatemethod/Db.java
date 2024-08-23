@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class Db {
 
-    private static Map<Long, BigDecimal> items = new HashMap<>();
+    private static final Map<Long, BigDecimal> items = new HashMap<>();
 
     static {
         items.put(1L, new BigDecimal("10"));

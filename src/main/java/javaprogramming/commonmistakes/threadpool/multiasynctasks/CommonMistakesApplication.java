@@ -12,7 +12,7 @@ import java.util.stream.IntStream;
 @Slf4j
 public class CommonMistakesApplication {
 
-    private static ExecutorService threadPool = Executors.newFixedThreadPool(10);
+    private static final ExecutorService threadPool = Executors.newFixedThreadPool(10);
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         test3();
@@ -54,6 +54,7 @@ public class CommonMistakesApplication {
         }
         log.info("result {} took {} ms", result, System.currentTimeMillis() - begin);
     }
+
     private static Runnable executeAsyncTask(int i, CountDownLatch countDownLatch, List<Integer> result) {
         return () -> {
             try {

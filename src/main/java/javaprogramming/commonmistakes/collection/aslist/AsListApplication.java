@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,7 +19,7 @@ public class AsListApplication {
 
     private static void wrong1() {
         int[] arr = {1, 2, 3};
-        List list = Arrays.asList(arr);
+        List list = Collections.singletonList(arr);
         log.info("list:{} size:{} class:{}", list, list.size(), list.get(0).getClass());
     }
 

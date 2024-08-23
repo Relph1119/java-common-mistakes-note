@@ -27,7 +27,7 @@ public class CommonMistakesApplication {
             while (true) {
                 String payload = IntStream.rangeClosed(1, 10000000)
                         .mapToObj(__ -> "a")
-                        .collect(Collectors.joining("")) + UUID.randomUUID().toString();
+                        .collect(Collectors.joining("")) + UUID.randomUUID();
                 try {
                     TimeUnit.SECONDS.sleep(10);
                 } catch (InterruptedException e) {

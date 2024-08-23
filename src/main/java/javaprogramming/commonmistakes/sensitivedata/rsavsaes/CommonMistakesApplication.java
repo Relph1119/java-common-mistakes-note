@@ -16,19 +16,19 @@ import java.util.stream.IntStream;
 
 
 public class CommonMistakesApplication {
-    private static KeyPair rsaKeyPair = genRSAKeyPair(2048);
-    private static SecretKey aesKey = genAESKey(256);
-    private static byte[] aesiv = genAESIV(16);
-    private static int count = 100000;
+    private static final KeyPair rsaKeyPair = genRSAKeyPair(2048);
+    private static final SecretKey aesKey = genAESKey(256);
+    private static final byte[] aesiv = genAESIV(16);
+    private static final int count = 100000;
 
     public static void main(String[] args) throws Exception {
 
         StopWatch stopWatch = new StopWatch();
         stopWatch.start("rsa");
-        IntStream.rangeClosed(1, count).parallel().forEach(i -> rsa((UUID.randomUUID().toString() + IntStream.rangeClosed(1, 64).mapToObj(__ -> "a").collect(Collectors.joining(""))).getBytes()));
+        IntStream.rangeClosed(1, count).parallel().forEach(i -> rsa((UUID.randomUUID() + IntStream.rangeClosed(1, 64).mapToObj(__ -> "a").collect(Collectors.joining(""))).getBytes()));
         stopWatch.stop();
         stopWatch.start("aes");
-        IntStream.rangeClosed(1, count).parallel().forEach(i -> aes((UUID.randomUUID().toString() + IntStream.rangeClosed(1, 64).mapToObj(__ -> "a").collect(Collectors.joining(""))).getBytes()));
+        IntStream.rangeClosed(1, count).parallel().forEach(i -> aes((UUID.randomUUID() + IntStream.rangeClosed(1, 64).mapToObj(__ -> "a").collect(Collectors.joining(""))).getBytes()));
         stopWatch.stop();
         System.out.println(stopWatch.prettyPrint());
     }
@@ -36,7 +36,7 @@ public class CommonMistakesApplication {
     private static void aes(byte[] data) {
         byte[] encryptedBytes = encryptAES(data, aesKey, aesiv);
         byte[] decryptedBytes = decryptAES(encryptedBytes, aesKey, aesiv);
-        Assert.assertTrue(Arrays.equals(decryptedBytes, data));
+        Assert.assertArrayEquals(decryptedBytes, data);
     }
 
     private static void rsa(byte[] data) {
@@ -44,7 +44,7 @@ public class CommonMistakesApplication {
         PrivateKey privateKey = rsaKeyPair.getPrivate();
         byte[] encryptedBytes = encryptRSA(data, publicKey);
         byte[] decryptedBytes = decryptRSA(encryptedBytes, privateKey);
-        Assert.assertTrue(Arrays.equals(decryptedBytes, data));
+        Assert.assertArrayEquals(decryptedBytes, data);
     }
 
     private static KeyPair genRSAKeyPair(int keyLength) {

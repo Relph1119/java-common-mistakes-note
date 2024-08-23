@@ -31,20 +31,20 @@ public class IntAndStringEqualController {
                 "String b = \"1\";\n" +
                 "a == b ? {}", a == b); //true
 
-        String c = new String("2");
-        String d = new String("2");
+        String c = "2";
+        String d = "2";
         log.info("\nString c = new String(\"2\");\n" +
                 "String d = new String(\"2\");" +
                 "c == d ? {}", c == d); //false
 
-        String e = new String("3").intern();
-        String f = new String("3").intern();
+        String e = "3".intern();
+        String f = "3".intern();
         log.info("\nString e = new String(\"3\").intern();\n" +
                 "String f = new String(\"3\").intern();\n" +
                 "e == f ? {}", e == f); //true
 
-        String g = new String("4");
-        String h = new String("4");
+        String g = "4";
+        String h = "4";
         log.info("\nString g = new String(\"4\");\n" +
                 "String h = new String(\"4\");\n" +
                 "g == h ? {}", g.equals(h)); //true

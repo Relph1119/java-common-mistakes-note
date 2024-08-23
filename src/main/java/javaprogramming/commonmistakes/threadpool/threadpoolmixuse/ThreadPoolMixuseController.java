@@ -25,7 +25,7 @@ import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 @Slf4j
 public class ThreadPoolMixuseController {
 
-    private static ThreadPoolExecutor threadPool = new ThreadPoolExecutor(
+    private static final ThreadPoolExecutor threadPool = new ThreadPoolExecutor(
             2, 2,
             1, TimeUnit.HOURS,
             new ArrayBlockingQueue<>(100),
@@ -33,7 +33,7 @@ public class ThreadPoolMixuseController {
             new ThreadPoolExecutor.CallerRunsPolicy());
 
 
-    private static ThreadPoolExecutor asyncCalcThreadPool = new ThreadPoolExecutor(
+    private static final ThreadPoolExecutor asyncCalcThreadPool = new ThreadPoolExecutor(
             200, 200,
             1, TimeUnit.HOURS,
             new ArrayBlockingQueue<>(1000),
@@ -79,7 +79,7 @@ public class ThreadPoolMixuseController {
             while (true) {
                 threadPool.execute(() -> {
                     try {
-                        Files.write(Paths.get("demo.txt"), Collections.singletonList(LocalTime.now().toString() + ":" + payload), UTF_8, CREATE, TRUNCATE_EXISTING);
+                        Files.write(Paths.get("demo.txt"), Collections.singletonList(LocalTime.now() + ":" + payload), UTF_8, CREATE, TRUNCATE_EXISTING);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

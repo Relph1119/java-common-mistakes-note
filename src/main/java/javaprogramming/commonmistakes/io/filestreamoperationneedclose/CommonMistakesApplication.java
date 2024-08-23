@@ -52,7 +52,7 @@ public class CommonMistakesApplication {
 
         String payload = IntStream.rangeClosed(1, 1000)
                 .mapToObj(__ -> "a")
-                .collect(Collectors.joining("")) + UUID.randomUUID().toString();
+                .collect(Collectors.joining("")) + UUID.randomUUID();
 //        Files.deleteIfExists(Paths.get("large.txt"));
 //        IntStream.rangeClosed(1, 10).forEach(__ -> {
 //            try {

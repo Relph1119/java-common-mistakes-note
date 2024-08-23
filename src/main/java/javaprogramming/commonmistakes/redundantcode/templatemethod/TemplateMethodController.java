@@ -20,7 +20,7 @@ import java.util.Map;
 @RequestMapping("templatemethod")
 public class TemplateMethodController {
 
-    private static Map<Long, Integer> items = new HashMap<>();
+    private static final Map<Long, Integer> items = new HashMap<>();
 
     static {
         items.put(1L, 2);

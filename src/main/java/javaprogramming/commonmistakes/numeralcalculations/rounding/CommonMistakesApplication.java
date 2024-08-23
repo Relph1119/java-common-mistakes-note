@@ -23,8 +23,8 @@ public class CommonMistakesApplication {
 
         double num1 = 3.35;
         float num2 = 3.35f;
-        System.out.println(String.format("%.1f", num1));//四舍五入
-        System.out.println(String.format("%.1f", num2));
+        System.out.printf("%.1f%n", num1);//四舍五入
+        System.out.printf("%.1f%n", num2);
     }
 
     private static void wrong2() {
@@ -39,9 +39,9 @@ public class CommonMistakesApplication {
 
     private static void right() {
         BigDecimal num1 = new BigDecimal("3.35");
-        BigDecimal num2 = num1.setScale(1, BigDecimal.ROUND_DOWN);
+        BigDecimal num2 = num1.setScale(1, RoundingMode.DOWN);
         System.out.println(num2);
-        BigDecimal num3 = num1.setScale(1, BigDecimal.ROUND_HALF_UP);
+        BigDecimal num3 = num1.setScale(1, RoundingMode.HALF_UP);
         System.out.println(num3);
     }
 }

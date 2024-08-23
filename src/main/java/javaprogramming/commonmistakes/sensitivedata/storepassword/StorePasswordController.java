@@ -18,7 +18,7 @@ import java.util.UUID;
 @RequestMapping("storepassword")
 public class StorePasswordController {
 
-    private static BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private static final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     @Autowired
     private UserRepository userRepository;
 

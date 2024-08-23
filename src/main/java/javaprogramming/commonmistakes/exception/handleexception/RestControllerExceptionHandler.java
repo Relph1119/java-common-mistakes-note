@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 public class RestControllerExceptionHandler {
 
-    private static int GENERIC_SERVER_ERROR_CODE = 2000;
-    private static String GENERIC_SERVER_ERROR_MESSAGE = "服务器忙，请稍后再试";
+    private static final int GENERIC_SERVER_ERROR_CODE = 2000;
+    private static final String GENERIC_SERVER_ERROR_MESSAGE = "服务器忙，请稍后再试";
 
     @ExceptionHandler
     public APIResponse handle(HttpServletRequest req, HandlerMethod method, Exception ex) {

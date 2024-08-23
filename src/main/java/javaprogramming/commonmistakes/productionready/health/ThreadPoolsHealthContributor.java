@@ -12,7 +12,7 @@ import java.util.Map;
 @Component
 public class ThreadPoolsHealthContributor implements CompositeHealthContributor {
 
-    private Map<String, HealthContributor> contributors = new HashMap<>();
+    private final Map<String, HealthContributor> contributors = new HashMap<>();
 
     ThreadPoolsHealthContributor() {
         this.contributors.put("demoThreadPool", new ThreadPoolHealthIndicator(ThreadPoolProvider.getDemoThreadPool()));

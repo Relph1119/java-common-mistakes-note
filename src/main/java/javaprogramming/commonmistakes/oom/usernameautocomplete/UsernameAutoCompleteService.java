@@ -17,7 +17,7 @@ import java.util.stream.LongStream;
 @Slf4j
 public class UsernameAutoCompleteService {
 
-    private ConcurrentHashMap<String, List<UserDTO>> autoCompleteIndex = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, List<UserDTO>> autoCompleteIndex = new ConcurrentHashMap<>();
 
     @Autowired
     private UserRepository userRepository;

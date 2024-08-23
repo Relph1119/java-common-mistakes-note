@@ -16,7 +16,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    private Lock lock = new ReentrantLock();
+    private final Lock lock = new ReentrantLock();
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void updateUserCounterWrong(String name, int i) {

@@ -10,7 +10,7 @@ public class CommonMistakesApplication {
 
     public static void main(String[] args) {
 
-        Utils.loadPropertySource(CommonMistakesApplication.class,"default-ribbon.properties");
+        Utils.loadPropertySource(CommonMistakesApplication.class, "default-ribbon.properties");
         SpringApplication.run(CommonMistakesApplication.class, args);
     }
 }

@@ -23,7 +23,7 @@ import java.util.concurrent.atomic.AtomicLong;
 @RequestMapping("order")
 public class OrderController {
     //总订单创建数量
-    private AtomicLong createOrderCounter = new AtomicLong();
+    private final AtomicLong createOrderCounter = new AtomicLong();
     private RabbitAdmin rabbitAdmin;
     @Autowired
     private RabbitTemplate rabbitTemplate;

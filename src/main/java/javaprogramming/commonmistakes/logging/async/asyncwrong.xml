@@ -5,14 +5,14 @@
             <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%thread] [%-5level] [%logger{40}:%line] - %msg%n</pattern>
         </layout>
     </appender>
-	<appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
-		<appender-ref ref="CONSOLE" />
+    <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="CONSOLE"/>
         <includeCallerData>true</includeCallerData>
         <!--		<discardingThreshold>200</discardingThreshold>-->
         <!--		<queueSize>1000</queueSize>-->
         <!--		<neverBlock>true</neverBlock>-->
-	</appender>
-	<root level="INFO">
-		<appender-ref ref="ASYNC" />
-	</root>
+    </appender>
+    <root level="INFO">
+        <appender-ref ref="ASYNC"/>
+    </root>
 </configuration>

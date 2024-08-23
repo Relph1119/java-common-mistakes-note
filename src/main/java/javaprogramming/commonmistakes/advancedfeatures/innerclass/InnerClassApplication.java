@@ -2,7 +2,7 @@ package javaprogramming.commonmistakes.advancedfeatures.innerclass;
 
 public class InnerClassApplication {
 
-    private String gender = "male";
+    private final String gender = "male";
 
     public static void main(String[] args) throws Exception {
 
@@ -18,7 +18,7 @@ public class InnerClassApplication {
     }
 
     class MyInnerClass {
-        private String name = "zhuye";
+        private final String name = "zhuye";
 
         void test() {
             System.out.println(gender);

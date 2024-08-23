@@ -21,7 +21,7 @@ import java.util.List;
 @MappedJdbcTypes({JdbcType.VARCHAR})
 public abstract class ListTypeHandler<T> extends BaseTypeHandler<List<T>> {
 
-    private static ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     @SneakyThrows
     @Override

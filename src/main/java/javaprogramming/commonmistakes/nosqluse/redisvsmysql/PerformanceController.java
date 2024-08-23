@@ -23,22 +23,21 @@ public class PerformanceController {
 
     @GetMapping("redis")
     public void redis() {
-        Assert.assertTrue(stringRedisTemplate.opsForValue().get("item" + (ThreadLocalRandom.current().nextInt(CommonMistakesApplication.ROWS) + 1)).equals(CommonMistakesApplication.PAYLOAD));
+        Assert.assertEquals(stringRedisTemplate.opsForValue().get("item" + (ThreadLocalRandom.current().nextInt(CommonMistakesApplication.ROWS) + 1)), CommonMistakesApplication.PAYLOAD);
     }
 
     @GetMapping("redis2")
     public void redis2() {
-        Assert.assertTrue(stringRedisTemplate.keys("item71*").size() == 1111);
+        Assert.assertEquals(1111, stringRedisTemplate.keys("item71*").size());
     }
 
     @GetMapping("mysql")
     public void mysql() {
-        Assert.assertTrue(jdbcTemplate.queryForObject("SELECT data FROM `r` WHERE name=?", new Object[]{("item" + (ThreadLocalRandom.current().nextInt(CommonMistakesApplication.ROWS) + 1))}, String.class)
-                .equals(CommonMistakesApplication.PAYLOAD));
+        Assert.assertEquals(jdbcTemplate.queryForObject("SELECT data FROM `r` WHERE name=?", new Object[]{("item" + (ThreadLocalRandom.current().nextInt(CommonMistakesApplication.ROWS) + 1))}, String.class), CommonMistakesApplication.PAYLOAD);
     }
 
     @GetMapping("mysql2")
     public void mysql2() {
-        Assert.assertTrue(jdbcTemplate.queryForList("SELECT name FROM `r` WHERE name LIKE 'item71%'", String.class).size() == 1111);
+        Assert.assertEquals(1111, jdbcTemplate.queryForList("SELECT name FROM `r` WHERE name LIKE 'item71%'", String.class).size());
     }
 }

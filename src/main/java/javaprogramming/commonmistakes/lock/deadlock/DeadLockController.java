@@ -24,7 +24,7 @@ import java.util.stream.IntStream;
 @Slf4j
 public class DeadLockController {
 
-    private ConcurrentHashMap<String, Item> items = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, Item> items = new ConcurrentHashMap<>();
 
     public DeadLockController() {
         IntStream.range(0, 10).forEach(i -> items.put("item" + i, new Item("item" + i)));

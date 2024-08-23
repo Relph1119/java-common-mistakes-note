@@ -26,7 +26,7 @@ public class ThreadPoolReuseController {
             threadPool.execute(() -> {
                 String payload = IntStream.rangeClosed(1, 1000000)
                         .mapToObj(__ -> "a")
-                        .collect(Collectors.joining("")) + UUID.randomUUID().toString();
+                        .collect(Collectors.joining("")) + UUID.randomUUID();
                 try {
                     TimeUnit.SECONDS.sleep(1);
                 } catch (InterruptedException e) {
@@ -38,7 +38,7 @@ public class ThreadPoolReuseController {
     }
 
     static class ThreadPoolHelper {
-        private static ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
+        private static final ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
                 10, 50,
                 2, TimeUnit.SECONDS,
                 new ArrayBlockingQueue<>(1000),

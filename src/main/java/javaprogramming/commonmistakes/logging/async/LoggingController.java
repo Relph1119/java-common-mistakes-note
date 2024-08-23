@@ -37,7 +37,7 @@ public class LoggingController {
         long begin = System.currentTimeMillis();
         String payload = IntStream.rangeClosed(1, 1000000)
                 .mapToObj(__ -> "a")
-                .collect(Collectors.joining("")) + UUID.randomUUID().toString();
+                .collect(Collectors.joining("")) + UUID.randomUUID();
         IntStream.rangeClosed(1, count).forEach(i -> log.info("{} {}", i, payload));
         Marker timeMarker = MarkerFactory.getMarker("time");
         log.info(timeMarker, "took {} ms", System.currentTimeMillis() - begin);

@@ -15,7 +15,7 @@ import java.util.stream.IntStream;
 @Slf4j
 public class LockGranularityController {
 
-    private List<Integer> data = new ArrayList<>();
+    private final List<Integer> data = new ArrayList<>();
 
     private void slow() {
         try {

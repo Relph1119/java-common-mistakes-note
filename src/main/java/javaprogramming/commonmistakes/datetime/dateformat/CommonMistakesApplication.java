@@ -17,10 +17,10 @@ import java.util.concurrent.TimeUnit;
 
 public class CommonMistakesApplication {
 
-    private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    private static ThreadLocal<SimpleDateFormat> threadSafeSimpleDateFormat = ThreadLocal.withInitial(() -> new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+    private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private static final ThreadLocal<SimpleDateFormat> threadSafeSimpleDateFormat = ThreadLocal.withInitial(() -> new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
 
-    private static DateTimeFormatter dateTimeFormatter = new DateTimeFormatterBuilder()
+    private static final DateTimeFormatter dateTimeFormatter = new DateTimeFormatterBuilder()
             .appendValue(ChronoField.YEAR)
             .appendLiteral("/")
             .appendValue(ChronoField.MONTH_OF_YEAR)

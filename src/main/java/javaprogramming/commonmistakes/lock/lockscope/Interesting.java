@@ -32,7 +32,7 @@ public class Interesting {
     public synchronized void compareRight() {
         log.info("compare start");
         for (int i = 0; i < 1000000; i++) {
-            Assert.assertTrue(a == b);
+            Assert.assertEquals(a, b);
             if (a < b) {
                 log.info("a:{},b:{},{}", a, b, a > b);
             }

@@ -19,12 +19,11 @@ import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class CoolStreamTest {
 
-    private Map<Long, Product> cache = new ConcurrentHashMap<>();
+    private final Map<Long, Product> cache = new ConcurrentHashMap<>();
 
     private static double calc(List<Integer> ints) {
         //临时中间集合
@@ -59,7 +58,7 @@ public class CoolStreamTest {
                 .average()
                 .orElse(0);
         //如何用一行代码来实现,比较一下可读性
-        assertThat(average, is(streamResult));
+        assertEquals(average, streamResult, 0);
     }
 
     @Test
@@ -69,7 +68,7 @@ public class CoolStreamTest {
         getProductAndCacheCool(100L);
 
         System.out.println(cache);
-        assertThat(cache.size(), is(1));
+        assertEquals(cache.size(), 1);
         assertTrue(cache.containsKey(1L));
     }
 
@@ -79,16 +78,16 @@ public class CoolStreamTest {
         getProductAndCache(100L);
 
         System.out.println(cache);
-        assertThat(cache.size(), is(1));
+        assertEquals(cache.size(), 1);
         assertTrue(cache.containsKey(1L));
     }
 
     private Product getProductAndCacheCool(Long id) {
-        return cache.computeIfAbsent(id, i -> //当Key不存在的时候提供一个Function来代表根据Key获取Value的过程
+        return cache.computeIfAbsent(id, i -> // 当Key不存在的时候提供一个Function来代表根据Key获取Value的过程
                 Product.getData().stream()
-                        .filter(p -> p.getId().equals(i)) //过滤
-                        .findFirst() //找第一个，得到Optional<Product>
-                        .orElse(null)); //如果找不Product到则使用null
+                        .filter(p -> p.getId().equals(i)) // 过滤
+                        .findFirst() // 找第一个，得到Optional<Product>
+                        .orElse(null)); // 如果找不到Product，则使用null
     }
 
     private Product getProductAndCache(Long id) {
@@ -114,7 +113,7 @@ public class CoolStreamTest {
         try (Stream<Path> pathStream = Files.walk(Paths.get("."))) {
             pathStream.filter(Files::isRegularFile) //只查普通文件
                     .filter(FileSystems.getDefault().getPathMatcher("glob:**/*.java")::matches) //搜索java源码文件
-                    .flatMap(ThrowingFunction.unchecked(path ->
+                    .flatMap(ThrowingFunction.unchecked(path -> // 使用ThrowingFunction包装，将受检异常转换为运行时异常
                             Files.readAllLines(path).stream() //读取文件内容，转换为Stream<List>
                                     .filter(line -> Pattern.compile("public class").matcher(line).find()) //使用正则过滤带有public class的行
                                     .map(line -> path.getFileName() + " >> " + line))) //把这行文件内容转换为文件名+行
@@ -125,7 +124,7 @@ public class CoolStreamTest {
     @Test
     public void fibonacci() {
         Stream.iterate(new BigInteger[]{BigInteger.ONE, BigInteger.ONE},
-                p -> new BigInteger[]{p[1], p[0].add(p[1])})
+                        p -> new BigInteger[]{p[1], p[0].add(p[1])})
                 .limit(100)
                 .forEach(p -> System.out.println(p[0]));
     }

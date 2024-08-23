@@ -7,14 +7,14 @@
         </encoder>
     </appender>
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-		<layout class="ch.qos.logback.classic.PatternLayout">
+        <layout class="ch.qos.logback.classic.PatternLayout">
             <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%thread] [%-5level] [%logger{40}:%line] - %msg%n</pattern>
-		</layout>
-	</appender>
+        </layout>
+    </appender>
     <logger name="javaprogramming.commonmistakes.logging" level="DEBUG" additivity="false">
         <appender-ref ref="FILE"/>
     </logger>
-	<root level="INFO">
-		<appender-ref ref="CONSOLE" />
-	</root>
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+    </root>
 </configuration>

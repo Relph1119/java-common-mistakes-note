@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
 import java.security.spec.AlgorithmParameterSpec;
 
 @RestController
@@ -119,7 +120,7 @@ public class StoreIdCardController {
     @GetMapping("cbc")
     public void cbc() throws Exception {
         Cipher cipher = Cipher.getInstance("AES/CBC/NoPadding");
-        IvParameterSpec iv = new IvParameterSpec(initVector.getBytes("UTF-8"));
+        IvParameterSpec iv = new IvParameterSpec(initVector.getBytes(StandardCharsets.UTF_8));
         test(cipher, iv);
     }
 }

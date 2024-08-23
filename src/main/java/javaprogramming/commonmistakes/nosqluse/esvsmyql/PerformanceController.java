@@ -53,7 +53,7 @@ public class PerformanceController {
         long begin = System.currentTimeMillis();
         //对于MySQL，使用JdbcTemplate+SQL语句实现直接更新某个category字段，更新1000次
         IntStream.rangeClosed(1, 1000).forEach(i -> {
-            jdbcTemplate.update("UPDATE `news` SET category=? WHERE id=?", new Object[]{"test" + i, id});
+            jdbcTemplate.update("UPDATE `news` SET category=? WHERE id=?", "test" + i, id);
         });
         log.info("mysql took {} ms result {}", System.currentTimeMillis() - begin, newsMySQLRepository.findById(id));
 

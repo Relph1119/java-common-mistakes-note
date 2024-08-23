@@ -19,8 +19,8 @@ import java.util.stream.LongStream;
 @Slf4j
 public class ConcurrentHashMapMisuseController {
 
-    private static int THREAD_COUNT = 10;
-    private static int ITEM_COUNT = 1000;
+    private static final int THREAD_COUNT = 10;
+    private static final int ITEM_COUNT = 1000;
 
     private ConcurrentHashMap<String, Long> getData(int count) {
         return LongStream.rangeClosed(1, count)

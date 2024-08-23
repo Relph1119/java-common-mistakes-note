@@ -20,7 +20,7 @@ public class FeignAndRibbonController {
     @GetMapping("client")
     public void timeout() {
         long begin = System.currentTimeMillis();
-        try{
+        try {
             client.server();
         } catch (Exception ex) {
             log.warn("执行耗时：{}ms 错误：{}", System.currentTimeMillis() - begin, ex.getMessage());

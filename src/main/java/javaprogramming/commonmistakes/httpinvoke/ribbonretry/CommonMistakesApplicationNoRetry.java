@@ -10,7 +10,7 @@ public class CommonMistakesApplicationNoRetry {
 
     public static void main(String[] args) {
 
-        Utils.loadPropertySource(CommonMistakesApplicationNoRetry.class,"noretry-ribbon.properties");
+        Utils.loadPropertySource(CommonMistakesApplicationNoRetry.class, "noretry-ribbon.properties");
         SpringApplication.run(CommonMistakesApplicationNoRetry.class, args);
     }
 }

@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserService {
-    private List<User> users = new ArrayList<>();
+    private final List<User> users = new ArrayList<>();
 
     public User register() {
         User user = new User();

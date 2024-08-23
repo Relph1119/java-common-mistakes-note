@@ -32,7 +32,7 @@ public class CommonMistakesApplication {
     private static void right1() {
 
         BigInteger i = new BigInteger(String.valueOf(Long.MAX_VALUE));
-        System.out.println(i.add(BigInteger.ONE).toString());
+        System.out.println(i.add(BigInteger.ONE));
 
         try {
             long l = i.add(BigInteger.ONE).longValueExact();
