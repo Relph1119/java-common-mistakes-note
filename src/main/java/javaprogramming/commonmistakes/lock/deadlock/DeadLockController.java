@@ -30,20 +30,24 @@ public class DeadLockController {
         IntStream.range(0, 10).forEach(i -> items.put("item" + i, new Item("item" + i)));
     }
 
+    // 下单操作
     private boolean createOrder(List<Item> order) {
+        // 声明所有的锁
         List<ReentrantLock> locks = new ArrayList<>();
 
         for (Item item : order) {
             try {
+                // 获取锁10s超时
                 if (item.lock.tryLock(10, TimeUnit.SECONDS)) {
                     locks.add(item.lock);
                 } else {
                     locks.forEach(ReentrantLock::unlock);
                     return false;
                 }
-            } catch (InterruptedException e) {
+            } catch (InterruptedException ignored) {
             }
         }
+        // 当锁全部获取成功，才进行扣减库存业务逻辑
         try {
             order.forEach(item -> item.remaining--);
         } finally {
@@ -52,15 +56,17 @@ public class DeadLockController {
         return true;
     }
 
+    // 随机选购3个商品
     private List<Item> createCart() {
         return IntStream.rangeClosed(1, 3)
                 .mapToObj(i -> "item" + ThreadLocalRandom.current().nextInt(items.size()))
-                .map(name -> items.get(name)).collect(Collectors.toList());
+                .map(items::get).collect(Collectors.toList());
     }
 
     @GetMapping("wrong")
     public long wrong() {
         long begin = System.currentTimeMillis();
+        // 并发进行100次下单操作，统计成功的下单次数
         long success = IntStream.rangeClosed(1, 100).parallel()
                 .mapToObj(i -> {
                     List<Item> cart = createCart();
@@ -80,6 +86,7 @@ public class DeadLockController {
         long begin = System.currentTimeMillis();
         long success = IntStream.rangeClosed(1, 100).parallel()
                 .mapToObj(i -> {
+                    // 先按照商品名排序，解决死锁问题
                     List<Item> cart = createCart().stream()
                             .sorted(Comparator.comparing(Item::getName))
                             .collect(Collectors.toList());
@@ -97,8 +104,11 @@ public class DeadLockController {
     @Data
     @RequiredArgsConstructor
     static class Item {
+        // 商品名
         final String name;
+        // 库存剩余
         int remaining = 1000;
+        // ToString不包含这个字段
         @ToString.Exclude
         ReentrantLock lock = new ReentrantLock();
     }

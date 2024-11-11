@@ -1,0 +1,5 @@
+### 调用错误服务wrong，运行100万次，但是输出不是100万
+GET http://localhost:45678/lockscope/wrong
+
+### 调用正确服务right，运行100万次，输出是100万
+GET http://localhost:45678/lockscope/right

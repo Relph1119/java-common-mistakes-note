@@ -2,7 +2,28 @@
 
 ## 问题排查
 
-### 1 启动ES集群遇到如下报错：
+### 1 在Windows中启动Docker Desktop遇到如下错误：
+
+```text
+Hardware assisted virtualization and data execution protection must be enabled in the BIOS.
+```
+
+**解决方案：**
+
+使用cmd管理员执行如下命令：
+1. 开启Hyper-V特性
+```shell
+dism.exe /Online /Enable-Feature:Microsoft-Hyper-V /All
+```
+
+2. 设置BIOS的Hyper-V启动类型为自动
+```shell
+bcdedit /set hypervisorlaunchtype auto
+```
+
+3. 重启系统
+
+### 2 启动ES集群遇到如下报错：
 
 ```text
 ERROR: [1] bootstrap checks failed

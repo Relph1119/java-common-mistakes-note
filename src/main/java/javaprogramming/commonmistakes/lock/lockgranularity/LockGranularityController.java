@@ -42,6 +42,7 @@ public class LockGranularityController {
         long begin = System.currentTimeMillis();
         IntStream.rangeClosed(1, 1000).parallel().forEach(i -> {
             slow();
+            // 只需要在操作ArrayList的时候加锁
             synchronized (data) {
                 data.add(i);
             }

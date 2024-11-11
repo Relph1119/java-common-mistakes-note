@@ -1,7 +1,6 @@
 package javaprogramming.commonmistakes.lock.lockandtransaction;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,15 +15,16 @@ import java.util.concurrent.Executors;
 public class LockAndTransactionController {
 
     ExecutorService executors = Executors.newCachedThreadPool();
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public LockAndTransactionController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("test3")
     public int test3(@RequestParam("name") String name) throws InterruptedException {
         for (int i = 0; i < 10; i++) {
-            executors.execute(() -> {
-                userService.updateUserCounterWrong(name, 1);
-            });
+            executors.execute(() -> userService.updateUserCounterWrong(name, 1));
 
         }
         Thread.sleep(2000);

@@ -1,0 +1,5 @@
+### 错误操作，将slow方法和操作ArrayList代码同时加锁
+GET http://localhost:45678/lockgranularity/wrong
+
+### 正常操作，仅将操作ArrayList的代码加锁
+GET http://localhost:45678/lockgranularity/right

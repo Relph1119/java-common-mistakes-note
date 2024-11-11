@@ -1,0 +1,5 @@
+### 发生死锁
+GET http://localhost:45678/deadlock/wrong
+
+### 不会发生死锁
+GET http://localhost:45678/deadlock/right
