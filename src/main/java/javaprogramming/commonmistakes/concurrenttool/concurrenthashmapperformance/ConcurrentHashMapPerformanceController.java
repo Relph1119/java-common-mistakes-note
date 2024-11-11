@@ -35,6 +35,7 @@ public class ConcurrentHashMapPerformanceController {
         Assert.isTrue(normaluse.entrySet().stream()
                         .mapToLong(item -> item.getValue()).reduce(0, Long::sum) == LOOP_COUNT
                 , "normaluse count error");
+
         stopWatch.start("gooduse");
         Map<String, Long> gooduse = gooduse();
         stopWatch.stop();
@@ -67,15 +68,18 @@ public class ConcurrentHashMapPerformanceController {
     }
 
     private Map<String, Long> gooduse() throws InterruptedException {
+        // 使用LongAdder进行线程安全计数
         ConcurrentHashMap<String, LongAdder> freqs = new ConcurrentHashMap<>(ITEM_COUNT);
         ForkJoinPool forkJoinPool = new ForkJoinPool(THREAD_COUNT);
         forkJoinPool.execute(() -> IntStream.rangeClosed(1, LOOP_COUNT).parallel().forEach(i -> {
                     String key = "item" + ThreadLocalRandom.current().nextInt(ITEM_COUNT);
+                    // 使用 computeIfAbsent 方法检查 freqs 中是否存在键 key。如果不存在，则插入一个新的 LongAdder 对象
                     freqs.computeIfAbsent(key, k -> new LongAdder()).increment();
                 }
         ));
         forkJoinPool.shutdown();
         forkJoinPool.awaitTermination(1, TimeUnit.HOURS);
+        // 将 LongAdder 转换为 Long 类型
         return freqs.entrySet().stream()
                 .collect(Collectors.toMap(
                         e -> e.getKey(),

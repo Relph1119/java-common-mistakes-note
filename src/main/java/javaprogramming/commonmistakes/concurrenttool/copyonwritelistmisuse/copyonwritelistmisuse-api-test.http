@@ -1,0 +1,5 @@
+### 测试并发写的性能
+GET http://localhost:45678/copyonwritelistmisuse/write
+
+### 测试并发读的性能
+GET http://localhost:45678/copyonwritelistmisuse/read

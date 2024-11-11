@@ -24,9 +24,11 @@ public class CopyOnWriteListMisuseController {
         StopWatch stopWatch = new StopWatch();
         int loopCount = 100000;
         stopWatch.start("Write:copyOnWriteArrayList");
+        // 循环10万次并发往CopyOnWriteArrayList写入随机元素
         IntStream.rangeClosed(1, loopCount).parallel().forEach(__ -> copyOnWriteArrayList.add(ThreadLocalRandom.current().nextInt(loopCount)));
         stopWatch.stop();
         stopWatch.start("Write:synchronizedList");
+        // 循环10万次并发往加锁的synchronizedList写入随机元素
         IntStream.rangeClosed(1, loopCount).parallel().forEach(__ -> synchronizedList.add(ThreadLocalRandom.current().nextInt(loopCount)));
         stopWatch.stop();
         log.info(stopWatch.prettyPrint());
@@ -44,15 +46,18 @@ public class CopyOnWriteListMisuseController {
     public Map testRead() {
         List<Integer> copyOnWriteArrayList = new CopyOnWriteArrayList<>();
         List<Integer> synchronizedList = Collections.synchronizedList(new ArrayList<>());
+        // 填充数据
         addAll(copyOnWriteArrayList);
         addAll(synchronizedList);
         StopWatch stopWatch = new StopWatch();
         int loopCount = 1000000;
         int count = copyOnWriteArrayList.size();
         stopWatch.start("Read:copyOnWriteArrayList");
+        // 循环10万次并发从CopyOnWriteArrayList随机查询元素
         IntStream.rangeClosed(1, loopCount).parallel().forEach(__ -> copyOnWriteArrayList.get(ThreadLocalRandom.current().nextInt(count)));
         stopWatch.stop();
         stopWatch.start("Read:synchronizedList");
+        // 循环10万次并发从加锁的synchronizedList随机查询元素
         IntStream.range(0, loopCount).parallel().forEach(__ -> synchronizedList.get(ThreadLocalRandom.current().nextInt(count)));
         stopWatch.stop();
         log.info(stopWatch.prettyPrint());

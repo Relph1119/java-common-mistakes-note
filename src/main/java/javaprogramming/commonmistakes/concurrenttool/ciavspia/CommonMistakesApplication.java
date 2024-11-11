@@ -11,6 +11,11 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class CommonMistakesApplication {
 
+    /**
+     * 当键存在时，putIfAbsent耗时较长，而computeIfAbsent应为传入的是Lambda表达式而不是实际值，耗时短。
+     * 当键不存在时，putIfAbsent会返回null，要小心NPE问题，而computeIfAbsent返回的是计算结果，不存在NPE问题。
+     * 当键不存在时，putIfAbsent允许存放null，而computeIfAbsent不允许。
+     */
     public static void main(String[] args) {
         test(new HashMap<>());
         test(new ConcurrentHashMap<>());

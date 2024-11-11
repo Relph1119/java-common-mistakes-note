@@ -1,0 +1,5 @@
+### 错误示例
+GET http://localhost:45678/concurrenthashmapmisuse/wrong
+
+### 正确示例，将整段逻辑加锁
+GET http://localhost:45678/concurrenthashmapmisuse/right

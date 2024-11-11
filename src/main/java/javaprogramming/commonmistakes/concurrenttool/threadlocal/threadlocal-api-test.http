@@ -1,0 +1,12 @@
+### 让用户1请求接口
+GET http://localhost:45678/threadlocal/wrong?userId=1
+
+### 让用户2请求接口
+GET http://localhost:45678/threadlocal/wrong?userId=2
+
+### 调用正确的服务，让用户1请求接口
+GET http://localhost:45678/threadlocal/right?userId=1
+
+### 调用正确的服务，让用户2请求接口
+GET http://localhost:45678/threadlocal/right?userId=2
+
