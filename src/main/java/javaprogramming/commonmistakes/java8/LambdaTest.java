@@ -1,12 +1,10 @@
 package javaprogramming.commonmistakes.java8;
 
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.*;
 
-import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 public class LambdaTest {

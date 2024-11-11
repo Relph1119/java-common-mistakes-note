@@ -11,5 +11,6 @@ public class OrderItem {
     private Long productId;
     private String productName;
     private Double productPrice;
+    // 商品数量
     private Integer productQuantity;
 }

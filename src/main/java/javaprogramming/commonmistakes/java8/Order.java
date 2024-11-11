@@ -15,8 +15,10 @@ public class Order {
     private Long id;
     private Long customerId;
     private String customerName;
+    // 订单明细
     private List<OrderItem> orderItemList;
     private Double totalPrice;
+    // 下单时间
     private LocalDateTime placedAt;
 
     public static List<Order> getData() {

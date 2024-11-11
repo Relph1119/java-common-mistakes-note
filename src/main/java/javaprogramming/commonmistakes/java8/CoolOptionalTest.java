@@ -5,8 +5,6 @@ import org.junit.Test;
 import java.util.Optional;
 import java.util.OptionalDouble;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.*;
 
 public class CoolOptionalTest {

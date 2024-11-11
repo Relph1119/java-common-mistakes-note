@@ -54,6 +54,7 @@ public class ConcurrentHashMapMisuseController {
 
         ForkJoinPool forkJoinPool = new ForkJoinPool(THREAD_COUNT);
         forkJoinPool.execute(() -> IntStream.rangeClosed(1, 10).parallel().forEach(i -> {
+            // 将复合逻辑中添加锁
             synchronized (concurrentHashMap) {
                 int gap = ITEM_COUNT - concurrentHashMap.size();
                 log.info("gap size:{}", gap);

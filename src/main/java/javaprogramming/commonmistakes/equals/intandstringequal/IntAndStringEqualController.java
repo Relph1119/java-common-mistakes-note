@@ -37,8 +37,8 @@ public class IntAndStringEqualController {
                 "String d = new String(\"2\");" +
                 "c == d ? {}", c == d); //false
 
-        String e = "3".intern();
-        String f = "3".intern();
+        String e = "3";
+        String f = "3";
         log.info("\nString e = new String(\"3\").intern();\n" +
                 "String f = new String(\"3\").intern();\n" +
                 "e == f ? {}", e == f); //true

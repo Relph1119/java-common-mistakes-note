@@ -2,7 +2,8 @@ package javaprogramming.commonmistakes.java8;
 
 
 import javaprogramming.commonmistakes.java8.collector.MostPopularCollector;
-import org.hamcrest.MatcherAssert;
+import org.elasticsearch.common.collect.HppcMaps;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,6 +12,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.atomic.LongAdder;
 import java.util.function.BinaryOperator;
+import java.util.function.Supplier;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -18,7 +20,8 @@ import static java.util.Comparator.comparing;
 import static java.util.Comparator.comparingDouble;
 import static java.util.stream.Collectors.*;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertThat;
 
 public class StreamDetailTest {
     private static final Random random = new Random();
@@ -75,7 +78,7 @@ public class StreamDetailTest {
         //不依赖订单上的总价格字段
         System.out.println(orders.stream().mapToDouble(Order::getTotalPrice).sum());
 
-        //如果不依赖订单上的总价格,可以直接展开订单商品进行价格统计
+        //如果不依赖订单上的总价格，可以直接展开订单商品进行价格统计
         System.out.println(orders.stream()
                 .flatMap(order -> order.getOrderItemList().stream())
                 .mapToDouble(item -> item.getProductQuantity() * item.getProductPrice()).sum());
@@ -100,8 +103,8 @@ public class StreamDetailTest {
 
         System.out.println("//按照用户名分组,统计商品采购数量");
         System.out.println(orders.stream().collect(groupingBy(Order::getCustomerName,
-                summingInt(order -> order.getOrderItemList().stream()
-                        .collect(summingInt(OrderItem::getProductQuantity)))))
+                        summingInt(order -> order.getOrderItemList().stream()
+                                .collect(summingInt(OrderItem::getProductQuantity)))))
                 .entrySet().stream().sorted(Map.Entry.<String, Integer>comparingByValue().reversed()).collect(toList()));
 
         System.out.println("//统计最受欢迎的商品，倒序后取第一个");
@@ -257,10 +260,9 @@ public class StreamDetailTest {
     public void customCollector() //自定义收集器
     {
         //最受欢迎收集器
-        assertThat(Stream.of(1, 1, 2, 2, 2, 3, 4, 5, 5).collect(new MostPopularCollector<>()).get(), is(2));
-        assertThat(Stream.of('a', 'b', 'c', 'c', 'c', 'd').collect(new MostPopularCollector<>()).get(), is('c'));
-        assertThat(Stream.concat(Stream.concat(IntStream.rangeClosed(1, 1000).boxed(), IntStream.rangeClosed(1, 1000).boxed()), Stream.of(2))
-                .parallel().collect(new MostPopularCollector<>()).get(), is(2));
-
+        assertSame(Stream.of(1, 1, 2, 2, 2, 3, 4, 5, 5).collect(new MostPopularCollector<>()).get(), 2);
+        assertSame(Stream.of('a', 'b', 'c', 'c', 'c', 'd').collect(new MostPopularCollector<>()).get(), 'c');
+        assertSame(Stream.concat(Stream.concat(IntStream.rangeClosed(1, 1000).boxed(), IntStream.rangeClosed(1, 1000).boxed()), Stream.of(2))
+                .parallel().collect(new MostPopularCollector<>()).get(), 2);
     }
 }
